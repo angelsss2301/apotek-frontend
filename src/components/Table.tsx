@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {
   flexRender,
   getCoreRowModel,
@@ -7,17 +9,16 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Fragment, useMemo, useState, useRef } from "react";
-import Button from "./Items/Button";
 import moment from "moment";
 import { useQueryClient } from "@tanstack/react-query";
-import { downloadExcel, useDownloadExcel } from "react-export-table-to-excel";
+import { useDownloadExcel } from "react-export-table-to-excel";
 // import fakeData from "../assets/MOCK_DATA.json"
 
 const Table = ({ columns, datas, filter, checkSuccess, title }: any) => {
-  const [sorting, setSorting] = useState([]);
-  const [filtering, setFiltering] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
+  const [sorting, setSorting] = useState<any>([]);
+  const setFiltering = useState("");
+  // const [success, setSuccess] = useState(false);
+  // const [error, setError] = useState(false);
 
   const tableRef = useRef(null);
 
@@ -39,10 +40,10 @@ const Table = ({ columns, datas, filter, checkSuccess, title }: any) => {
     },
 
     onSortingChange: setSorting,
-    onGlobalFilterChange: setFiltering,
+    onGlobalFilterChange: setFiltering[1],
   });
 
-  const handleDelete = async (borrowId: string) => {
+  const handleDelete = async (borrowId: any) => {
     checkSuccess(true);
     const data = await fetch(`http://localhost:3000/obat/${borrowId}`, {
       method: "DELETE",
@@ -90,9 +91,9 @@ const Table = ({ columns, datas, filter, checkSuccess, title }: any) => {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
+          {table.getRowModel().rows.map((row : any) => (
             <tr key={row.id} id={row.id}>
-              {row.getVisibleCells().map((cell, i) => (
+              {row.getVisibleCells().map((cell : any, i : number) => (
                 <Fragment key={`${cell.id}${i}`}>
                   {cell.column.id !== "Opsi" ? (
                     cell.column.id === "created_at" ? (
@@ -191,7 +192,7 @@ const Table = ({ columns, datas, filter, checkSuccess, title }: any) => {
         </svg>
       </button>
 
-      {success && (
+      {/* {success && (
         <div className="toast toast-start">
           <div className="alert alert-success">
             <span>Kamu berhasil menghapus Obat.</span>
@@ -204,7 +205,7 @@ const Table = ({ columns, datas, filter, checkSuccess, title }: any) => {
             <span>Kamu gagal menghapus Obat.</span>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

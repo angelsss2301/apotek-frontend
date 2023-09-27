@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import Table from '../../components/Items/Table';
 
 const DataKategori = () => {
-  const [data, setData] = useState<Array>([])
+  const [data, setData] = useState([])
 
   useEffect(()=>{
       const getData = async () =>{
-        const raw = await fetch('http://localhost:3000/obat')
+        const raw = await fetch(import.meta.env.VITE_API_OBAT_URL)
         const {data} = await raw.json()
         setData(data)
       }

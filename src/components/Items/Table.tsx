@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table"
 import { useMemo, useState } from "react"
 import { downloadExcel } from "react-export-table-to-excel"
@@ -48,7 +49,7 @@ const Table = ({ columns, datas, header }: any) => {
   })
 
   const handleDelete = async (borrowId: string) => {
-    const data = await fetch(`http://localhost:3006/delete/${borrowId}`)
+    const data = await fetch(`${VITE_API_OBAT_DELETE_URL}/${borrowId}`)
 
     if (data.ok) {
       setSuccess(true)

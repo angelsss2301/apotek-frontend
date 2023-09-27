@@ -1,7 +1,7 @@
 import Button from "./Button";
 import InputBox from "./InputBox";
 
-const Label = ({ text, htmlFor }) => {
+const Label = ({ text, htmlFor } : any) => {
     return (
         <label htmlFor={htmlFor} className="min-w-[70px]">
             {text}
@@ -9,11 +9,11 @@ const Label = ({ text, htmlFor }) => {
     );
 };
 
-const FormArea = ({ children }) => {
+const FormArea = ({ children } : any) => {
     return <div className="input-box flex items-center gap-4">{children}</div>;
 };
 
-const InsertAreaTransaksi = ({ showHargaLabel }) => {
+const InsertAreaTransaksi = ({ showHargaLabel } : any) => {
     return (
         <div className="border rounded-md p-3 mb-2">
             <select className="select select-info select-sm w-full max-w-xs mb-5">

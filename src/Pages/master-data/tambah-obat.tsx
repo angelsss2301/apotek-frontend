@@ -1,15 +1,15 @@
 import { useState } from "react";
 import InputBox from "../../components/Items/InputBox";
 
-interface Obat{
-  nama: String;
-  satuan: String;
-  stock: Number;
-  harga: Number;
-  jenis: String;
-}
+// interface Obat{
+//   nama: String;
+//   satuan: String;
+//   stock: Number;
+//   harga: Number;
+//   jenis: String;
+// }
 
-const Label = ({ text, htmlFor }) => {
+const Label = ({ text, htmlFor } : any) => {
   return (
     <label htmlFor={htmlFor} className="min-w-[70px]">
       {text}
@@ -18,12 +18,12 @@ const Label = ({ text, htmlFor }) => {
 };
 
 
-const CardItem = ({ cardTitle, datas } : any) => {
-  const [data, setData] = useState<Obat>({})
-  const [filter, setFilter] = useState("");
+const CardItem = ({ cardTitle } : any) => {
+  const [data, setData] = useState({})
+  // const [filter, setFilter] = useState("");
   
   const handleSubmit = async () =>{
-    const res = await fetch('http://localhost:3000/obat',{
+    const res = await fetch(import.meta.env.VITE_API_OBAT_URL,{
       method: "POST",
       headers:{
         "Content-type":"application/json"

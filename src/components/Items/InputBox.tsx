@@ -1,5 +1,5 @@
 const InputBox = ({ id, addCLass, nama, val }: any) => {
-  const handleChange = (e) => {
+  const handleChange = (e : any) => {
     val((prev: any) => ({
       ...prev,
       [e.target.name]: e.target.value,

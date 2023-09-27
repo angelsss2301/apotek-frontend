@@ -1,4 +1,4 @@
-const SearchInput = ({ placeholder, filtered }) => {
+const SearchInput = ({ placeholder, filtered } : any) => {
     return (
         <div className="form-control w-1/2">
             <div className="input-group">

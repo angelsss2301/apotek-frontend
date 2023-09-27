@@ -8,9 +8,9 @@ const DataObat = () => {
   const [filter, setFilter] = useState<string>("");
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: async () => {
-      const raw = await fetch("http://localhost:3000/obat");
+      const raw = await fetch(import.meta.env.VITE_API_OBAT_URL);
       const res = raw.json();
       return res;
     },
@@ -56,7 +56,19 @@ const DataObat = () => {
       <CardItem cardTitle="Tabel Obat">
         <SearchInput placeholder="Cari Obat..." filtered={setFilter} />
 
-        {data && <Table datas={data.data} columns={columns} filter={filter} checkSuccess={setIsSuccess} title={'Data Obat'}/>}
+        {isLoading ? (
+          <img src="/loading.svg" className="w-[200px] mx-auto m-2" />
+        ) : (
+          data && (
+            <Table
+              datas={data.data}
+              columns={columns}
+              filter={filter}
+              checkSuccess={setIsSuccess}
+              title={"Data Obat"}
+            />
+          )
+        )}
       </CardItem>
       <div className="toast toast-top toast-end">
         {isSuccess && (

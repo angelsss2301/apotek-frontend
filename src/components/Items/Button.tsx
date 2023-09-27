@@ -1,4 +1,4 @@
-const Button = ({ variant, text, onClick, disabled }) => {
+const Button = ({ variant, text, onClick, disabled } : any) => {
     return (
         <button
             className={`btn btn-sm ${variant} hover:brightness-75`}

@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Fragment, useState } from "react";
 
 interface obat {
@@ -6,15 +6,16 @@ interface obat {
   stock: Number;
   jenis: String;
   harga: Number;
+  id: string;
 }
 const Masuk = () => {
-  const [stock, setStock] = useState();
+  const [stock, setStock] = useState<any>();
 
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryFn: async () => {
-      const raw = await fetch("http://localhost:3000/obat");
+      const raw = await fetch(import.meta.env.VITE_API_OBAT_URL);
       const res = raw.json();
       return res;
     },
@@ -22,7 +23,7 @@ const Masuk = () => {
   });
 
   const handleUpdate = async (id: string) => {
-    await fetch("http://localhost:3000/sale", {
+    await fetch(import.meta.env.VITE_API_OBAT_KELUAR, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
@@ -33,10 +34,16 @@ const Masuk = () => {
       }),
     });
 
-    queryClient.invalidateQueries({
-      queryKey: ["obat"],
-    });
   };
+
+  const {mutate, isLoading} = useMutation({
+    mutationFn: handleUpdate,
+    onSuccess: () =>{
+      queryClient.invalidateQueries({
+        queryKey: ['obat']
+      })
+    }
+  })
 
   return (
     <div className="absolute top-12 grid grid-cols-2 gap-8 w-full">
@@ -63,12 +70,12 @@ const Masuk = () => {
                   <td>
                     <form>
                       <input
+                        disabled={Number(obat.stock) === 0}
                         onChange={(e) => setStock(e.currentTarget.value)}
                         type="number"
                         id="quantity"
                         name="quantity"
                         min="1"
-                        value={stock}
                         className="ml-2 border-2 border-gray-300 p-2 rounded-md w-[50px]"
                       />
                     </form>
@@ -76,9 +83,9 @@ const Masuk = () => {
                   <td>
                     <button
                       className="p-2 bg-teal-500 w-full rounded-md"
+                      disabled={isLoading}
                       onClick={() => {
-                        handleUpdate(obat.id)
-                        setStock("")
+                        mutate(obat.id);
                       }}
                     >
                       +

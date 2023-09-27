@@ -1,4 +1,5 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Fragment, useState } from "react";
 
 interface obat {
@@ -6,23 +7,26 @@ interface obat {
   stock: Number;
   jenis: String;
   harga: Number;
+  id: string;
+  jumlah: number;
 }
+
 const Masuk = () => {
-  const [stock, setStock] = useState();
+  const [stock, setStock] = useState<any>();
 
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryFn: async () => {
-      const raw = await fetch("http://localhost:3000/obat");
+      const raw = await fetch(import.meta.env.VITE_API_OBAT_URL);
       const res = raw.json();
       return res;
     },
     queryKey: ["obat"],
   });
 
-  const handleUpdate = async (id: string) => {
-    await fetch("http://localhost:3000/purchase", {
+  const handleUpdate = async (id:string) => {
+    await fetch(import.meta.env.VITE_API_OBAT_MASUK, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",
@@ -30,13 +34,20 @@ const Masuk = () => {
       body: JSON.stringify({
         id,
         stock: Number(stock),
+        nominal: 5000
       }),
     });
-
-    queryClient.invalidateQueries({
-      queryKey: ["obat"],
-    });
   };
+
+  const {isLoading} = useMutation({
+    mutationFn: handleUpdate,
+    onSuccess: () =>{
+      queryClient.invalidateQueries({
+        queryKey: ['obat']
+      })
+    },
+    mutationKey: ['update-obat']
+  })
 
   return (
     <div className="absolute top-12 grid grid-cols-2 gap-8 w-full">
@@ -63,6 +74,8 @@ const Masuk = () => {
                   <td>
                     <form>
                       <input
+
+                        disabled={Number(obat.stock) === 0}
                         onChange={(e) => setStock(e.currentTarget.value)}
                         type="number"
                         id="quantity"
@@ -75,9 +88,9 @@ const Masuk = () => {
                   <td>
                     <button
                       className="p-2 bg-teal-500 w-full rounded-md"
+                      disabled={isLoading}
                       onClick={() => {
                         handleUpdate(obat.id)
-                        setStock("")
                       }}
                     >
                       +

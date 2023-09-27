@@ -1,7 +1,6 @@
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./Pages/Dashboard.js";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 
 function App() {

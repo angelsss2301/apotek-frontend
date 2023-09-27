@@ -1,6 +1,6 @@
 import Button from "./Button";
 
-const Collapse = ({ children, dataObat }) => {
+const Collapse = ({ children, dataObat } : any) => {
     return (
         <div className="collapse">
             <input type="checkbox" className="max-w-[200px]" />

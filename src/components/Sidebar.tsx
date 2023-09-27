@@ -1,6 +1,5 @@
 import { MdDashboardCustomize, MdOutlineLocalPharmacy } from "react-icons/md";
 import { BiTransfer } from "react-icons/bi";
-import { PiBooksFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {

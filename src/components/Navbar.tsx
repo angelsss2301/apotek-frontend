@@ -32,7 +32,7 @@ const Navbar = () => {
             <div className="navbar-end mr-8 ">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                     <div className="w-20 rounded-full ">
-                        <img src="../../public/img/profile.jpg" />
+                        <img src="../../public/img/profilee.jpg" />
                     </div>
                 </label>{" "}
             </div>
